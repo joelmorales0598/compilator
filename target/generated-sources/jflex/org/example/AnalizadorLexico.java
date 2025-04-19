@@ -4,6 +4,9 @@
 
 package org.example;
 
+/* user code: */
+import java.util.ArrayList;
+import java.util.List;
 
 @SuppressWarnings("fallthrough")
 public class AnalizadorLexico {
@@ -62,10 +65,15 @@ public class AnalizadorLexico {
 
   private static final String ZZ_CMAP_BLOCKS_PACKED_0 =
     "\11\0\1\1\1\2\1\3\2\4\22\0\1\1\1\5"+
-    "\1\6\5\0\6\7\1\10\1\11\12\12\1\0\1\7"+
-    "\1\13\1\14\1\13\2\0\32\15\1\0\1\16\2\0"+
-    "\1\15\1\0\15\15\1\17\14\15\1\7\1\0\1\7"+
-    "\7\0\1\3\u01a2\0\2\3\326\0\u0100\3";
+    "\1\6\5\0\2\7\1\10\1\11\1\7\1\12\1\13"+
+    "\1\14\12\15\1\0\1\7\1\16\1\17\1\16\2\0"+
+    "\1\20\1\21\1\22\1\23\1\24\1\25\1\21\1\26"+
+    "\1\27\2\21\1\30\1\21\1\31\1\32\1\33\1\21"+
+    "\1\34\1\35\1\36\1\37\1\21\1\40\3\21\1\0"+
+    "\1\41\2\0\1\21\1\0\1\42\3\21\1\43\1\44"+
+    "\5\21\1\45\1\21\1\46\3\21\1\47\1\50\1\51"+
+    "\1\52\5\21\1\7\1\0\1\7\7\0\1\3\u01a2\0"+
+    "\2\3\326\0\u0100\3";
 
   private static int [] zzUnpackcmap_blocks() {
     int [] result = new int[1024];
@@ -92,11 +100,12 @@ public class AnalizadorLexico {
   private static final int [] ZZ_ACTION = zzUnpackAction();
 
   private static final String ZZ_ACTION_PACKED_0 =
-    "\1\0\1\1\2\2\1\3\2\1\5\4\1\0\1\5"+
-    "\1\0\1\4";
+    "\1\0\1\1\2\2\1\3\2\1\1\4\1\5\1\6"+
+    "\1\7\1\10\1\11\1\4\17\12\1\0\1\11\1\13"+
+    "\1\0\2\12\1\4\12\12\1\11\13\12\1\4\5\12";
 
   private static int [] zzUnpackAction() {
-    int [] result = new int[16];
+    int [] result = new int[64];
     int offset = 0;
     offset = zzUnpackAction(ZZ_ACTION_PACKED_0, offset, result);
     return result;
@@ -121,11 +130,17 @@ public class AnalizadorLexico {
   private static final int [] ZZ_ROWMAP = zzUnpackRowMap();
 
   private static final String ZZ_ROWMAP_PACKED_0 =
-    "\0\0\0\20\0\40\0\20\0\20\0\60\0\100\0\20"+
-    "\0\120\0\140\0\60\0\160\0\100\0\200\0\220\0\220";
+    "\0\0\0\53\0\126\0\53\0\53\0\201\0\254\0\53"+
+    "\0\53\0\53\0\53\0\327\0\u0102\0\201\0\u012d\0\u0158"+
+    "\0\u0183\0\u01ae\0\u01d9\0\u0204\0\u022f\0\u025a\0\u0285\0\u02b0"+
+    "\0\u02db\0\u0306\0\u0331\0\u035c\0\u0387\0\254\0\53\0\u03b2"+
+    "\0\u03dd\0\u0408\0\u0433\0\u0158\0\u045e\0\u0489\0\u04b4\0\u04df"+
+    "\0\u050a\0\u0535\0\u0560\0\u058b\0\u05b6\0\u05e1\0\u03dd\0\u060c"+
+    "\0\u0637\0\u0662\0\u068d\0\u06b8\0\u06e3\0\u070e\0\u0739\0\u0764"+
+    "\0\u078f\0\u07ba\0\u07e5\0\u0810\0\u083b\0\u0866\0\u0891\0\u08bc";
 
   private static int [] zzUnpackRowMap() {
-    int [] result = new int[16];
+    int [] result = new int[64];
     int offset = 0;
     offset = zzUnpackRowMap(ZZ_ROWMAP_PACKED_0, offset, result);
     return result;
@@ -149,14 +164,60 @@ public class AnalizadorLexico {
 
   private static final String ZZ_TRANS_PACKED_0 =
     "\1\2\1\3\1\4\1\5\1\3\1\6\1\7\1\10"+
-    "\1\2\1\11\1\12\2\13\1\14\1\2\1\14\21\0"+
-    "\1\3\2\0\1\3\27\0\1\10\3\0\6\15\1\10"+
-    "\7\15\13\0\1\16\16\0\1\17\1\0\1\12\17\0"+
-    "\1\14\2\0\1\14\1\0\1\14\2\16\3\0\13\16"+
-    "\12\0\1\20\5\0";
+    "\1\11\1\12\1\13\1\2\1\14\1\15\2\16\1\17"+
+    "\2\20\1\21\1\22\1\23\1\20\1\24\1\25\1\26"+
+    "\1\27\1\30\1\31\1\20\1\32\1\20\1\33\1\2"+
+    "\2\20\1\34\4\20\1\35\1\20\54\0\1\3\2\0"+
+    "\1\3\65\0\1\10\33\0\6\36\1\37\32\36\1\0"+
+    "\4\36\1\0\4\36\14\0\1\40\51\0\1\41\1\0"+
+    "\1\15\52\0\1\20\2\0\11\20\1\42\7\20\1\0"+
+    "\11\20\15\0\1\20\2\0\21\20\1\0\11\20\15\0"+
+    "\1\20\2\0\4\20\1\43\5\20\1\44\6\20\1\0"+
+    "\11\20\15\0\1\20\2\0\10\20\1\45\1\42\7\20"+
+    "\1\0\11\20\15\0\1\20\2\0\17\20\1\46\1\20"+
+    "\1\0\11\20\15\0\1\20\2\0\5\20\1\44\13\20"+
+    "\1\0\11\20\15\0\1\20\2\0\12\20\1\47\6\20"+
+    "\1\0\11\20\15\0\1\20\2\0\12\20\1\50\6\20"+
+    "\1\0\11\20\15\0\1\20\2\0\14\20\1\44\4\20"+
+    "\1\0\11\20\15\0\1\20\2\0\14\20\1\51\4\20"+
+    "\1\0\11\20\15\0\1\20\2\0\4\20\1\52\14\20"+
+    "\1\0\11\20\15\0\1\20\2\0\6\20\1\53\12\20"+
+    "\1\0\11\20\15\0\1\20\2\0\6\20\1\54\12\20"+
+    "\1\0\11\20\15\0\1\20\2\0\21\20\1\0\1\55"+
+    "\10\20\15\0\1\20\2\0\21\20\1\0\5\20\1\56"+
+    "\3\20\2\40\3\0\46\40\15\0\1\57\52\0\1\20"+
+    "\2\0\3\20\1\44\15\20\1\0\11\20\15\0\1\20"+
+    "\2\0\5\20\1\60\13\20\1\0\11\20\15\0\1\20"+
+    "\2\0\15\20\1\61\3\20\1\0\11\20\15\0\1\20"+
+    "\2\0\11\20\1\62\7\20\1\0\11\20\15\0\1\20"+
+    "\2\0\12\20\1\63\6\20\1\0\11\20\15\0\1\20"+
+    "\2\0\16\20\1\44\2\20\1\0\11\20\15\0\1\20"+
+    "\2\0\7\20\1\64\11\20\1\0\11\20\15\0\1\20"+
+    "\2\0\16\20\1\65\2\20\1\0\11\20\15\0\1\20"+
+    "\2\0\4\20\1\66\14\20\1\0\11\20\15\0\1\20"+
+    "\2\0\7\20\1\67\11\20\1\0\11\20\15\0\1\20"+
+    "\2\0\21\20\1\0\3\20\1\70\5\20\15\0\1\20"+
+    "\2\0\21\20\1\0\10\20\1\71\15\0\1\20\2\0"+
+    "\7\20\1\72\11\20\1\0\11\20\15\0\1\20\2\0"+
+    "\4\20\1\73\14\20\1\0\11\20\15\0\1\20\2\0"+
+    "\2\20\1\74\16\20\1\0\11\20\15\0\1\20\2\0"+
+    "\13\20\1\44\5\20\1\0\11\20\15\0\1\20\2\0"+
+    "\11\20\1\50\7\20\1\0\11\20\15\0\1\20\2\0"+
+    "\17\20\1\75\1\20\1\0\11\20\15\0\1\20\2\0"+
+    "\11\20\1\44\7\20\1\0\11\20\15\0\1\20\2\0"+
+    "\10\20\1\76\10\20\1\0\11\20\15\0\1\20\2\0"+
+    "\21\20\1\0\6\20\1\71\2\20\15\0\1\20\2\0"+
+    "\21\20\1\0\1\20\1\44\7\20\15\0\1\20\2\0"+
+    "\11\20\1\76\7\20\1\0\11\20\15\0\1\20\2\0"+
+    "\7\20\1\24\11\20\1\0\11\20\15\0\1\20\2\0"+
+    "\16\20\1\77\2\20\1\0\11\20\15\0\1\20\2\0"+
+    "\14\20\1\66\4\20\1\0\11\20\15\0\1\20\2\0"+
+    "\4\20\1\44\14\20\1\0\11\20\15\0\1\20\2\0"+
+    "\7\20\1\100\11\20\1\0\11\20\15\0\1\20\2\0"+
+    "\12\20\1\66\6\20\1\0\11\20";
 
   private static int [] zzUnpacktrans() {
-    int [] result = new int[160];
+    int [] result = new int[2279];
     int offset = 0;
     offset = zzUnpacktrans(ZZ_TRANS_PACKED_0, offset, result);
     return result;
@@ -199,11 +260,11 @@ public class AnalizadorLexico {
   private static final int [] ZZ_ATTRIBUTE = zzUnpackAttribute();
 
   private static final String ZZ_ATTRIBUTE_PACKED_0 =
-    "\1\0\1\11\1\1\2\11\2\1\1\11\4\1\1\0"+
-    "\1\1\1\0\1\1";
+    "\1\0\1\11\1\1\2\11\2\1\4\11\22\1\1\0"+
+    "\1\11\1\1\1\0\37\1";
 
   private static int [] zzUnpackAttribute() {
-    int [] result = new int[16];
+    int [] result = new int[64];
     int offset = 0;
     offset = zzUnpackAttribute(ZZ_ATTRIBUTE_PACKED_0, offset, result);
     return result;
@@ -279,9 +340,22 @@ public class AnalizadorLexico {
   @SuppressWarnings("unused")
   private boolean zzEOFDone;
 
-  /* user code: */
+    // Lista para almacenar instrucciones TAC
+    private List<String> codigoIntermedio = new ArrayList<>();
+
+    // Contador para temporales
+    private int tempCounter = 1;
+
+    public List<String> getCodigoIntermedio() {
+        return codigoIntermedio;
+    }
+
     public void imprimirLexema(String lexema, long caracter, int linea){
         System.out.println("Lexema: " + lexema + " | Columna: " + caracter + " | Línea: " + linea);
+    }
+
+    public String nuevaTemporal() {
+        return "t" + tempCounter++;
     }
 
 
@@ -701,27 +775,67 @@ public class AnalizadorLexico {
             { System.err.println("Carácter no reconocido: " + yytext());
             }
           // fall through
-          case 6: break;
+          case 12: break;
           case 2:
             { /* Ignorar */
             }
           // fall through
-          case 7: break;
+          case 13: break;
           case 3:
             { System.out.print(yytext());
             }
           // fall through
-          case 8: break;
+          case 14: break;
           case 4:
             { imprimirLexema(yytext(), yycolumn, yyline);
             }
           // fall through
-          case 9: break;
+          case 15: break;
           case 5:
+            { String t = nuevaTemporal();
+                codigoIntermedio.add(t + " = op1 * op2");
+                imprimirLexema(yytext(), yycolumn, yyline);
+            }
+          // fall through
+          case 16: break;
+          case 6:
+            { String t = nuevaTemporal();
+                codigoIntermedio.add(t + " = op1 + op2");
+                imprimirLexema(yytext(), yycolumn, yyline);
+            }
+          // fall through
+          case 17: break;
+          case 7:
+            { String t = nuevaTemporal();
+                codigoIntermedio.add(t + " = op1 - op2");
+                imprimirLexema(yytext(), yycolumn, yyline);
+            }
+          // fall through
+          case 18: break;
+          case 8:
+            { String t = nuevaTemporal();
+                codigoIntermedio.add(t + " = op1 / op2");
+                imprimirLexema(yytext(), yycolumn, yyline);
+            }
+          // fall through
+          case 19: break;
+          case 9:
+            { codigoIntermedio.add("push " + yytext());
+                imprimirLexema(yytext(), yycolumn, yyline);
+            }
+          // fall through
+          case 20: break;
+          case 10:
+            { codigoIntermedio.add("ref " + yytext());
+                imprimirLexema(yytext(), yycolumn, yyline);
+            }
+          // fall through
+          case 21: break;
+          case 11:
             { /* Ignorar comentarios */
             }
           // fall through
-          case 10: break;
+          case 22: break;
           default:
             zzScanError(ZZ_NO_MATCH);
         }

@@ -10,25 +10,36 @@ package org.example;
 %line
 %column
 %{
-    GeneradorTAC generador = new GeneradorTAC();
-    String variableActual = null;
-    String operadorActual = null;
-    String operando1 = null;
-
-    public void imprimirLexema(String lexema, long caracter, int linea){
-        System.out.println("Lexema: " + lexema + " | Columna: " + caracter + " | Línea: " + linea);
-    }
-
-    public void finalizar() {
-        generador.imprimirCodigoIntermedio();
-    }
+    //Esto se debe de importar en la clase de Jflex
+    //import java.util.ArrayList;
+    //import java.util.List;
 %}
+
+%%
+
+// Lista para almacenar instrucciones TAC
+private List<String> codigoIntermedio = new ArrayList<>();
+
+// Contador para temporales
+private int tempCounter = 1;
+
+public List<String> getCodigoIntermedio() {
+    return codigoIntermedio;
+}
+
+public void imprimirLexema(String lexema, long caracter, int linea){
+    System.out.println("Lexema: " + lexema + " | Columna: " + caracter + " | Línea: " + linea);
+}
+
+public String nuevaTemporal() {
+    return "t" + tempCounter++;
+}
 
 // Expresiones regulares
 id      = [a-zA-Z_][a-zA-Z0-9_]*
 entero  = [0-9]+
 flotante = [0-9]+\.[0-9]+
-cadena  = \"([^"\\n]*)\"
+cadena  = \"([^\"\\n]*)\"
 espacio = [ \t\r\f]+
 nuevaLinea = \n
 comentario = "//".*
@@ -37,10 +48,7 @@ comentario = "//".*
 
 // Palabras clave
 "DEFINE"    { imprimirLexema(yytext(), yycolumn, yyline); }
-"PRINT"     {
-                imprimirLexema(yytext(), yycolumn, yyline);
-                generador.agregarInstruccion("// print");
-            }
+"PRINT"     { imprimirLexema(yytext(), yycolumn, yyline); }
 "IF"        { imprimirLexema(yytext(), yycolumn, yyline); }
 "THEN"      { imprimirLexema(yytext(), yycolumn, yyline); }
 "ELSE"      { imprimirLexema(yytext(), yycolumn, yyline); }
@@ -58,11 +66,7 @@ comentario = "//".*
 "false"     { imprimirLexema(yytext(), yycolumn, yyline); }
 
 // Operadores
-"+"         { operadorActual = "+"; imprimirLexema(yytext(), yycolumn, yyline); }
-"-"         { operadorActual = "-"; imprimirLexema(yytext(), yycolumn, yyline); }
-"*"         { operadorActual = "*"; imprimirLexema(yytext(), yycolumn, yyline); }
-"/"         { operadorActual = "/"; imprimirLexema(yytext(), yycolumn, yyline); }
-"="         { operadorActual = "="; imprimirLexema(yytext(), yycolumn, yyline); }
+"="         { imprimirLexema(yytext(), yycolumn, yyline); }
 "=="        { imprimirLexema(yytext(), yycolumn, yyline); }
 "!="        { imprimirLexema(yytext(), yycolumn, yyline); }
 ">"         { imprimirLexema(yytext(), yycolumn, yyline); }
@@ -70,53 +74,54 @@ comentario = "//".*
 ">="        { imprimirLexema(yytext(), yycolumn, yyline); }
 "<="        { imprimirLexema(yytext(), yycolumn, yyline); }
 
+// Operadores aritméticos (genera TAC de ejemplo)
+"+"         {
+                String t = nuevaTemporal();
+                codigoIntermedio.add(t + " = op1 + op2");
+                imprimirLexema(yytext(), yycolumn, yyline);
+            }
+"-"         {
+                String t = nuevaTemporal();
+                codigoIntermedio.add(t + " = op1 - op2");
+                imprimirLexema(yytext(), yycolumn, yyline);
+            }
+"*"         {
+                String t = nuevaTemporal();
+                codigoIntermedio.add(t + " = op1 * op2");
+                imprimirLexema(yytext(), yycolumn, yyline);
+            }
+"/"         {
+                String t = nuevaTemporal();
+                codigoIntermedio.add(t + " = op1 / op2");
+                imprimirLexema(yytext(), yycolumn, yyline);
+            }
+
 // Símbolos
 "("         { imprimirLexema(yytext(), yycolumn, yyline); }
 ")"         { imprimirLexema(yytext(), yycolumn, yyline); }
 "{"         { imprimirLexema(yytext(), yycolumn, yyline); }
 "}"         { imprimirLexema(yytext(), yycolumn, yyline); }
-";"         {
-                imprimirLexema(yytext(), yycolumn, yyline);
-                if (operando1 != null && operadorActual != null && variableActual != null && !operadorActual.equals("=")) {
-                    String temp = generador.nuevaTemporal();
-                    generador.agregarInstruccion(temp + " = " + variableActual + " " + operadorActual + " " + operando1);
-                    generador.agregarInstruccion(variableActual + " = " + temp);
-                } else if (variableActual != null && operadorActual != null && operadorActual.equals("=") && operando1 != null) {
-                    generador.agregarInstruccion(variableActual + " = " + operando1);
-                }
-                variableActual = null;
-                operadorActual = null;
-                operando1 = null;
-            }
+";"         { imprimirLexema(yytext(), yycolumn, yyline); }
 ","         { imprimirLexema(yytext(), yycolumn, yyline); }
 
 // Literales
 {entero}    {
+                codigoIntermedio.add("push " + yytext());
                 imprimirLexema(yytext(), yycolumn, yyline);
-                if (operadorActual == null) {
-                    variableActual = yytext();
-                } else {
-                    operando1 = yytext();
-                }
             }
 {flotante}  {
+                codigoIntermedio.add("push " + yytext());
                 imprimirLexema(yytext(), yycolumn, yyline);
-                if (operadorActual == null) {
-                    variableActual = yytext();
-                } else {
-                    operando1 = yytext();
-                }
             }
-{cadena}    { imprimirLexema(yytext(), yycolumn, yyline); }
+{cadena}    {
+                codigoIntermedio.add("push " + yytext());
+                imprimirLexema(yytext(), yycolumn, yyline);
+            }
 
 // Identificadores
 {id}        {
+                codigoIntermedio.add("ref " + yytext());
                 imprimirLexema(yytext(), yycolumn, yyline);
-                if (operadorActual == null) {
-                    variableActual = yytext();
-                } else {
-                    operando1 = yytext();
-                }
             }
 
 // Comentarios (ignorados)

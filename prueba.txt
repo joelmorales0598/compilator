@@ -1,6 +1,1 @@
-DEFINE x = 10;
-IF x > 5 THEN
-    PRINT "x es mayor que 5";
-ELSE
-    PRINT "x es menor o igual a 5";
-END
+DEFINE x = 10 + 5;
